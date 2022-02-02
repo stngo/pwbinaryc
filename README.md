@@ -1,6 +1,6 @@
 # pwbinaryc
 
-## [P]ython [w]rited [B]inary [C]onverter
+## [P]ython [w]rited [Binary] [C]onverter
 
 
 You have rights to:
