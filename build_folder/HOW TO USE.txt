@@ -1,4 +1,4 @@
-HOW TO USE
+HOW TO BUILD PWBINARYC.EXE
 
 open cmd and type: "pogas.cmd [COMMAND]"
 
@@ -6,4 +6,4 @@ Commands:
 	build (= Build the MAIN.py)
 	updater (= Build the Updater.py)
 
-.EXE's are in the dist/ folder!
+.EXE's are in the dist/ folder! [will be created, after build]
