@@ -3,6 +3,8 @@ import ctypes as cty
 import msvcrt as mcr
 import Updater as uda
 
+SC_ = "stngo_11.19"
+
 DEF_OUTPUT = 'output.txt'
 DEF_WAIT_TIME = 1
 
@@ -41,6 +43,9 @@ try:
 except:
 	loadMsg(0)
 
+if pref_data['DebugCode'] == SC_:  # I know, you can copy my debug code and paste it into prefences... i know, its useless xD
+	CONFIG_DEBUG = True
+else: CONFIG_DEBUG = False
 
 # Convert Logo binary to real text, to use it at the top
 logo_string_values = logo_string.split()
@@ -74,7 +79,7 @@ while runMethod:
 	print(main_logo + dn)
 
 	reTitle(titl + 'Selecting a Method')
-	print('Select:'+dn+dn+'[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+'[3] Exit'+dn)
+	print('Select:'+dn+dn+'[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+'[3] Exit'+dn+'[4] Check for Updates'+dn)
 
 
 	select_method = mcr.getch()
@@ -84,18 +89,24 @@ while runMethod:
 	if select_method == b'3':
 		runMethod = False
 		break
+	elif select_method == b'4':
+		clear()
+		print(main_logo +dn+ '\nCheck for Updates...'+dn+dn)
+		time.sleep(0.5)
+		uda.check
+		time.sleep(DEF_WAIT_TIME)
 
 	elif select_method == b'1':
 		tobin_str = input(dn+'Paste text here: ')
 
-		tobin_array = bytearray(tobin_str, "utf8")
+		tobin_array = bytearray(tobin_str, "utf-8")
 		byte_list = []
 
 		for byte in tobin_array:
 			tobin_repr = bin(byte)
 
 			byte_list.append(tobin_repr)
-			lenth_byte = len(byte_list)
+			#lenth_byte = len(byte_list)
 
 		FILE_NAME = 'TEXT_TO_BINARY.txt'
 		with open(FILE_NAME, 'w') as fl:
@@ -103,25 +114,17 @@ while runMethod:
 
 			tWrite = ""
 			while writingFile:
-				try:
-					tWrite += byte_list[lenth_byte]
-				except IndexError:
-					print(lenth_byte)
-					writingFile = False ; break
+				tWrite = ' '.join(map(str, byte_list))
 
 				fl.write(tWrite)
 
-				lenth_byte -= 1
-
-				if lenth_byte == 0:
-					print('Lenth is 0  -  %s' % lenth_byte)
-					time.sleep(2)
-					writingFile = False
-					break
-				else: continue
+				writingFile=False
+				break
 
 		print('Finished! Output is in %s' % FILE_NAME)
-		print(tobin_repr)
+
+		if CONFIG_DEBUG:
+			print('\n[DEBUG] ' + str(byte_list))
 
 		time.sleep(DEF_WAIT_TIME)
 
@@ -141,7 +144,8 @@ while runMethod:
 			flg.write(totext_finish)
 
 		print('Finished! Output is in %s' % FILE_NAME)
-		print(totext_finish+dn+dn+totext_char)
+		if CONFIG_DEBUG:
+			print(totext_finish+dn+dn+totext_char+dn+str(totext_aint))
 
 		time.sleep(DEF_WAIT_TIME)
 

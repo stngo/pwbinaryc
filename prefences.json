@@ -8,5 +8,6 @@
 		"redirect": "https://stngo.github.io/data-up/database/api/pwbinaryc_api.json",
 		"host": "Data-Up",
 		"madeHost": "D4R10"
-	}
+	},
+	"DebugCode": "none"
 }
