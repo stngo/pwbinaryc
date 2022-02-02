@@ -1,0 +1,5 @@
+host_api/*
+build_folder/*
+
+TEXT_TO_BINARY.txt
+BINARY_TO_TEXT.txt

@@ -1,6 +1,7 @@
 import os,time,sys,json
 import ctypes as cty
 import msvcrt as mcr
+import Updater as uda
 
 DEF_OUTPUT = 'output.txt'
 DEF_WAIT_TIME = 1
@@ -52,15 +53,27 @@ for binary_value in logo_string_values:
 
 	main_logo += ascii_char
 
+
+
+i_onetime = True
 runMethod = True
 
 while runMethod:
 	# Begin selection
+
+	# Check For Updates, One Time
+	while i_onetime:
+		print(main_logo + dn)
+		reTitle(titl + 'Checking for updates...')
+		uda.check()
+		time.sleep(DEF_WAIT_TIME)
+		
+		i_onetime = False
 	clear()
-	reTitle(titl + 'Selecting a Method')
 
 	print(main_logo + dn)
 
+	reTitle(titl + 'Selecting a Method')
 	print('Select:'+dn+dn+'[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+'[3] Exit'+dn)
 
 
