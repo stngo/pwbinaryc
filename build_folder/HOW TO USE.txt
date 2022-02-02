@@ -1,0 +1,9 @@
+HOW TO USE
+
+open cmd and type: "pogas.cmd [COMMAND]"
+
+Commands:
+	build (= Build the MAIN.py)
+	updater (= Build the Updater.py)
+
+.EXE's are in the dist/ folder!

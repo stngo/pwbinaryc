@@ -1,5 +1,6 @@
 host_api/*
-build_folder/*
+build_folder/build/*
+build_folder/dist/*
 
 TEXT_TO_BINARY.txt
 BINARY_TO_TEXT.txt
