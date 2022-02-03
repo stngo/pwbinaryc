@@ -3,6 +3,19 @@ import ctypes as cty
 import msvcrt as mcr
 import Updater as uda
 
+
+Black = "\u001b[30m"
+Red = "\u001b[31m"
+Green = "\u001b[32m"
+Yellow = "\u001b[33m"
+Blue = "\u001b[34m"
+Magenta = "\u001b[35m"
+Cyan = "\u001b[36m"
+White = "\u001b[37m"
+
+Reset = "\u001b[0m"
+
+
 SC_ = "stngo_11.19"
 
 DEF_OUTPUT = 'output.txt'
@@ -13,13 +26,13 @@ reTitle = cty.windll.kernel32.SetConsoleTitleW
 dn = "\n"
 
 err_msg = [
-	"Can't load %s properly! Restart, or reinstall program, to use it!" % pref_file,
+	f"{Red}Can't load {pref_file} properly! Restart, or reinstall program, to use it!"
 ]
 
 # Load some Functions, because i need it kekw
 def loadMsg(number):
 	print(err_msg[int(number)])
-	input('Press Enter, to quit!\n')
+	input('Press Enter, to quit!\n') ; print(Reset)
 	exit()
 def clear():
     # for windows
@@ -30,7 +43,7 @@ def clear():
         os.system('clear')
 
 
-
+clear()
 # Loading Prefences File
 with open(pref_file, 'r') as pref_o: # Open File
 	pref_data = pref_o.read() # Read pref and save it as var
@@ -79,7 +92,7 @@ while runMethod:
 	print(main_logo + dn)
 
 	reTitle(titl + 'Selecting a Method')
-	print('Select:'+dn+dn+'[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+'[3] Exit'+dn+'[4] Check for Updates'+dn)
+	print(f'{Cyan}Select:'+dn+dn+f'{Green}[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+f'{Red}[3] Exit'+dn+f'{Yellow}[4] Check for Updates{Reset}'+dn)
 
 
 	select_method = mcr.getch()
@@ -93,7 +106,7 @@ while runMethod:
 		clear()
 		print(main_logo +dn+ '\nCheck for Updates...'+dn+dn)
 		time.sleep(0.5)
-		uda.check
+		uda.check()
 		time.sleep(DEF_WAIT_TIME)
 
 	elif select_method == b'1':
