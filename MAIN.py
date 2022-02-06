@@ -13,13 +13,15 @@ Magenta = "\u001b[35m"
 Cyan = "\u001b[36m"
 White = "\u001b[37m"
 
-Reset = "\u001b[0m"
+ResetColor = "\u001b[0m"
 
 
 SC_ = "stngo_11.19"
 
 DEF_OUTPUT = 'output.txt'
-DEF_WAIT_TIME = 1
+DEF_WAIT_TIME = 1.5
+DEF_OUTPUT_BINTEXT = 'BINARY_TO_TEXT.txt'
+DEF_OUTPUT_TEXTBIN = 'TEXT_TO_BINARY.txt'
 
 pref_file = 'prefences.json'
 reTitle = cty.windll.kernel32.SetConsoleTitleW
@@ -32,7 +34,7 @@ err_msg = [
 # Load some Functions, because i need it kekw
 def loadMsg(number):
 	print(err_msg[int(number)])
-	input('Press Enter, to quit!\n') ; print(Reset)
+	input('Press Enter, to quit!\n') ; print(ResetColor)
 	exit()
 def clear():
     # for windows
@@ -50,7 +52,7 @@ with open(pref_file, 'r') as pref_o: # Open File
 	pref_data = json.loads(pref_data) # Loading as json
 
 try:
-	titl = pref_data['window']['title']
+	titl = pref_data['window']['title'] + pref_data['window']['title.prefix']
 	reTitle(titl + 'Loading resources...') # Set as window-title
 	logo_string=pref_data['window']['logo']
 except:
@@ -92,7 +94,7 @@ while runMethod:
 	print(main_logo + dn)
 
 	reTitle(titl + 'Selecting a Method')
-	print(f'{Cyan}Select:'+dn+dn+f'{Green}[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+f'{Red}[3] Exit'+dn+f'{Yellow}[4] Check for Updates{Reset}'+dn)
+	print(f'{Cyan}Select:'+dn+dn+f'{Green}[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+f'{Red}[3] Exit'+dn+f'{Yellow}[4] Check for Updates'+dn+f'{White}[5] Delete temporary files{ResetColor}'+dn)
 
 
 	select_method = mcr.getch()
@@ -108,6 +110,9 @@ while runMethod:
 		time.sleep(0.5)
 		uda.check()
 		time.sleep(DEF_WAIT_TIME)
+	elif select_method == b'5':
+		os.remove(DEF_OUTPUT_BINTEXT)
+		os.remove(DEF_OUTPUT_TEXTBIN)
 
 	elif select_method == b'1':
 		tobin_str = input(dn+'Paste text here: ')
@@ -121,7 +126,7 @@ while runMethod:
 			byte_list.append(tobin_repr)
 			#lenth_byte = len(byte_list)
 
-		FILE_NAME = 'TEXT_TO_BINARY.txt'
+		FILE_NAME = DEF_OUTPUT_TEXTBIN
 		with open(FILE_NAME, 'w') as fl:
 			writingFile = True
 
@@ -134,7 +139,7 @@ while runMethod:
 				writingFile=False
 				break
 
-		print('Finished! Output is in %s' % FILE_NAME)
+		print(f'{Green}Finished! Output is in %s{ResetColor}' % FILE_NAME)
 
 		if CONFIG_DEBUG:
 			print('\n[DEBUG] ' + str(byte_list))
@@ -152,11 +157,11 @@ while runMethod:
 
 			totext_finish += totext_char
 
-		FILE_NAME = 'BINARY_TO_TEXT.txt'
+		FILE_NAME = DEF_OUTPUT_BINTEXT
 		with open(FILE_NAME, 'w') as flg:
 			flg.write(totext_finish)
 
-		print('Finished! Output is in %s' % FILE_NAME)
+		print(f'{Green}Finished! Output is in %s{ResetColor}' % FILE_NAME)
 		if CONFIG_DEBUG:
 			print(totext_finish+dn+dn+totext_char+dn+str(totext_aint))
 

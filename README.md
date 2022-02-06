@@ -12,8 +12,8 @@ You haven't the rights to:
 - Upload it on an other page
 
 ### Source Code Setup
-- Install Python 3.9.x
-- Install library: pyinstaller (to build the .exe)
+- Install Python 3.9.x (or 3.10.x, reinstalled windows and installed newest version, works too)
+- Install libraries: **pyinstaller** *(to build the .exe)* and **requests**!
 - Edit the code!
 
 How to **build** the **.exe** -> *Look in the* ***build_folder*** *and open* ***HOW TO USE.txt**!*
