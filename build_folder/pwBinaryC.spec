@@ -5,7 +5,7 @@ block_cipher = None
 
 
 a = Analysis(['..\\MAIN.py'],
-             pathex=['C:\\D4R10\\ionCrypt\\github_repositories\\pwbinaryc\\build_folder'],
+             pathex=[],
              binaries=[],
              datas=[('../Updater.py', '.')],
              hiddenimports=[],
