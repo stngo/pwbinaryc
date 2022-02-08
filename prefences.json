@@ -10,5 +10,6 @@
 		"host": "Data-Up",
 		"madeHost": "D4R10"
 	},
-	"DebugCode": "none"
+	"DebugCode": "none",
+	"InstallerBuild": "1"
 }

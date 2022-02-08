@@ -20,8 +20,31 @@ SC_ = "stngo_11.19"
 
 DEF_OUTPUT = 'output.txt'
 DEF_WAIT_TIME = 1.5
+DEF_INSTALLER_FOLDER = 'stngo\\'
+DEF_FINISH_FOLDER = os.path.expanduser('~\\Documents\\'+DEF_INSTALLER_FOLDER)
 DEF_OUTPUT_BINTEXT = 'BINARY_TO_TEXT.txt'
 DEF_OUTPUT_TEXTBIN = 'TEXT_TO_BINARY.txt'
+
+# Set Methods (easy to change for beginner-coders)
+DEF_METHODS_PREFIX = []
+DEF_METHODS = []  # don't override it!
+
+	# Adding Methods!
+DEF_METHODS_PREFIX += ['%s[1]' % ResetColor]
+DEF_METHODS += ['%s Text to Binary Code' % Green]
+
+DEF_METHODS_PREFIX += ['%s[2]' % ResetColor]
+DEF_METHODS += ['%s Binary Code to Text' % Green]
+
+DEF_METHODS_PREFIX += ['%s[3]' % ResetColor]
+DEF_METHODS += ['%s Exit' % Red]
+
+DEF_METHODS_PREFIX += ['%s[4]' % ResetColor]
+DEF_METHODS += ['%s Check for Updates' % Yellow]
+
+DEF_METHODS_PREFIX += ['%s[5]' % ResetColor]
+DEF_METHODS += ['%s Delete temporary files' % White]
+
 
 pref_file = 'prefences.json'
 reTitle = cty.windll.kernel32.SetConsoleTitleW
@@ -42,7 +65,7 @@ def clear():
         os.system('cls')
     # for mac and linux
     else:
-        os.system('clear')
+        os.system('clear')  # Support, but no build for it... Nice!
 
 
 clear()
@@ -62,6 +85,11 @@ if pref_data['DebugCode'] == SC_:  # I know, you can copy my debug code and past
 	CONFIG_DEBUG = True
 else: CONFIG_DEBUG = False
 
+if pref_data['InstallerBuild'] == '1':
+	INSTALLERBUILD = True
+else: INSTALLERBUILD = False
+
+
 # Convert Logo binary to real text, to use it at the top
 logo_string_values = logo_string.split()
 main_logo = ""
@@ -73,6 +101,13 @@ for binary_value in logo_string_values:
 
 	main_logo += ascii_char
 
+if INSTALLERBUILD:  # SET (IF INSTALLER) PATH
+	if os.path.exists(DEF_FINISH_FOLDER):
+		pass
+	else: os.mkdir(DEF_FINISH_FOLDER)
+
+	DEF_OUTPUT_BINTEXT = os.path.expanduser('~\\Documents\\'+DEF_INSTALLER_FOLDER+DEF_OUTPUT_BINTEXT)
+	DEF_OUTPUT_TEXTBIN = os.path.expanduser('~\\Documents\\'+DEF_INSTALLER_FOLDER+DEF_OUTPUT_TEXTBIN)
 
 
 i_onetime = True
@@ -81,7 +116,7 @@ runMethod = True
 while runMethod:
 	# Begin selection
 
-	# Check For Updates, One Time
+		# Check For Updates, One Time
 	while i_onetime:
 		print(main_logo + dn)
 		reTitle(titl + 'Checking for updates...')
@@ -89,12 +124,20 @@ while runMethod:
 		time.sleep(DEF_WAIT_TIME)
 		
 		i_onetime = False
-	clear()
+
+	clear() # Beginn Methods
 
 	print(main_logo + dn)
 
 	reTitle(titl + 'Selecting a Method')
-	print(f'{Cyan}Select:'+dn+dn+f'{Green}[1] Text to Binary Code'+dn+'[2] Binary Code to Text'+dn+f'{Red}[3] Exit'+dn+f'{Yellow}[4] Check for Updates'+dn+f'{White}[5] Delete temporary files{ResetColor}'+dn)
+	print(
+		f'{ResetColor}Select a method:' +dn+dn,
+		DEF_METHODS_PREFIX[0] + DEF_METHODS[0] +dn,
+		DEF_METHODS_PREFIX[1] + DEF_METHODS[1] +dn,
+		DEF_METHODS_PREFIX[2] + DEF_METHODS[2] +dn,
+		DEF_METHODS_PREFIX[3] + DEF_METHODS[3] +dn,
+		DEF_METHODS_PREFIX[4] + DEF_METHODS[4] +dn
+	)
 
 
 	select_method = mcr.getch()
@@ -105,16 +148,27 @@ while runMethod:
 		runMethod = False
 		break
 	elif select_method == b'4':
+		reTitle(titl + 'Checking for Updates')
 		clear()
 		print(main_logo +dn+ '\nCheck for Updates...'+dn+dn)
 		time.sleep(0.5)
 		uda.check()
 		time.sleep(DEF_WAIT_TIME)
 	elif select_method == b'5':
-		os.remove(DEF_OUTPUT_BINTEXT)
-		os.remove(DEF_OUTPUT_TEXTBIN)
+		reTitle(titl + 'Delete temporary files')
+		try:
+			os.remove(DEF_OUTPUT_BINTEXT)
+		except: pass
+		try:
+			os.remove(DEF_OUTPUT_TEXTBIN)
+		except: pass
+
+		print('%sTemporary files deleted!' % ResetColor)
+		time.sleep(DEF_WAIT_TIME)
 
 	elif select_method == b'1':
+		reTitle(titl + 'Encode text to binary code')
+
 		tobin_str = input(dn+'Paste text here: ')
 
 		tobin_array = bytearray(tobin_str, "utf-8")
@@ -145,8 +199,10 @@ while runMethod:
 			print('\n[DEBUG] ' + str(byte_list))
 
 		time.sleep(DEF_WAIT_TIME)
+		os.startfile(DEF_FINISH_FOLDER)  # Open directory
 
 	elif select_method == b'2':
+		reTitle(titl + 'Decode binary code to text')
 		totext_int = input(dn+'Paste Binary Code here: ')
 		totext_values = totext_int.split()
 
@@ -161,10 +217,18 @@ while runMethod:
 		with open(FILE_NAME, 'w') as flg:
 			flg.write(totext_finish)
 
-		print(f'{Green}Finished! Output is in %s{ResetColor}' % FILE_NAME)
+		print(f'{Green}Finished! Output is in{dn}%s{ResetColor}' % FILE_NAME)
 		if CONFIG_DEBUG:
 			print(totext_finish+dn+dn+totext_char+dn+str(totext_aint))
 
 		time.sleep(DEF_WAIT_TIME)
+		os.startfile(DEF_FINISH_FOLDER)  # Open directory
+
+	elif select_method == b'8':
+		clear()
+		print(f'Name: {pref_data["window"]["title"]}\nVersion: {pref_data["CurrentVersion"]}\n')  #NAME_VERSION
+		print(DEF_OUTPUT_BINTEXT+ dn +DEF_OUTPUT_TEXTBIN)  #PATH
+
+		input()
 
 exit()
