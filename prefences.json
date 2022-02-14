@@ -1,5 +1,5 @@
 {
-	"CurrentVersion": "0.1.2",
+	"CurrentVersion": "0.2.0",
 	"window": {
 		"title": "pwBinaryC",
 		"title.prefix": "  |  ",
@@ -11,5 +11,5 @@
 		"madeHost": "D4R10"
 	},
 	"DebugCode": "none",
-	"InstallerBuild": "1"
+	"InstallerBuild": "0"
 }

@@ -32,3 +32,4 @@ if __name__ == "__main__":  # If its started (not imported!)
 
 	# Checking, if a update is available
 	check()
+	input('Press Enter, to quit')

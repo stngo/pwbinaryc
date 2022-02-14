@@ -1,4 +1,4 @@
-import os,time,sys,json
+import os,time,json
 import ctypes as cty
 import msvcrt as mcr
 import Updater as uda
@@ -18,15 +18,14 @@ ResetColor = "\u001b[0m"
 
 SC_ = "stngo_11.19"
 
-DEF_OUTPUT = 'output.txt'
-DEF_WAIT_TIME = 1.5
+DEF_WAIT_TIME = 2
 DEF_INSTALLER_FOLDER = 'stngo\\'
 DEF_FINISH_FOLDER = os.path.expanduser('~\\Documents\\'+DEF_INSTALLER_FOLDER)
 DEF_OUTPUT_BINTEXT = 'BINARY_TO_TEXT.txt'
 DEF_OUTPUT_TEXTBIN = 'TEXT_TO_BINARY.txt'
 
 # Set Methods (easy to change for beginner-coders)
-DEF_METHODS_PREFIX = []
+DEF_METHODS_PREFIX = []  # don't override it!
 DEF_METHODS = []  # don't override it!
 
 	# Adding Methods!
@@ -226,7 +225,14 @@ while runMethod:
 
 	elif select_method == b'8':
 		clear()
-		print(f'Name: {pref_data["window"]["title"]}\nVersion: {pref_data["CurrentVersion"]}\n')  #NAME_VERSION
+		print(f'Name: {pref_data["window"]["title"]}\nVersion: {pref_data["CurrentVersion"]}\n\n')  #NAME_VERSION
+		print(
+			'Methods:' +dn,
+			str(DEF_METHODS) +dn,
+			str(len(DEF_METHODS)) +dn+dn,
+			str(DEF_METHODS_PREFIX) +dn,
+			str(len(DEF_METHODS_PREFIX)) +dn,
+		)
 		print(DEF_OUTPUT_BINTEXT+ dn +DEF_OUTPUT_TEXTBIN)  #PATH
 
 		input()
